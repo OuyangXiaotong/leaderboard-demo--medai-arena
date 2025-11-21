@@ -4,6 +4,8 @@
     "name": "model 1",
     "type": "Vision",
     "elo": 1292,
+    "modality": "ct",
+    "region": "brain",
     "organization": "organization 1",
     "license": "MIT"
   },
@@ -12,6 +14,8 @@
     "name": "model 2",
     "type": "LLM",
     "elo": 1290,
+    "modality": "ct",
+    "region": "brain",
     "organization": "organization 2",
     "license": "Proprietary"
   },
@@ -20,6 +24,8 @@
     "name": "model 3",
     "type": "Multimodal",
     "elo": 1285,
+    "modality": "ct",
+    "region": "brain",
     "organization": "organization 3",
     "license": "Proprietary"
   }
