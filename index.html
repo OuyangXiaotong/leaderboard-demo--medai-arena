@@ -240,37 +240,7 @@
     </footer>
 
     <script>
-function filterMainCategory(cat) {
-    console.log("Main category:", cat);
 
-    // 更新按钮高亮
-    document.querySelectorAll(".main-cat-btn").forEach(btn => btn.classList.remove("active"));
-    document.querySelector(`[onclick="filterMainCategory('${cat}')"]`).classList.add("active");
-
-    // TODO: 这里以后加过滤逻辑
-}
-
-function filterTask(task) {
-    console.log("Task:", task);
-
-    document.querySelectorAll(".task-btn").forEach(btn => btn.classList.remove("active"));
-    document.querySelector(`[onclick="filterTask('${task}')"]`).classList.add("active");
-
-    // TODO: 这里以后加过滤逻辑
-}
-
-function filterModality() {
-    const mod = document.getElementById("modality-select").value;
-    console.log("Modality:", mod);
-}
-
-function sortTable(key) {
-    console.log("Sorting by:", key);
-}
-
-document.getElementById("show-more-btn").addEventListener("click", () => {
-    console.log("Show more clicked");
-});
     </script>
 </body>
 </html>
