@@ -38,7 +38,7 @@ PR template:
 ## ⭐ Star History
 [![Star History Chart](https://api.star-history.com/svg?repos=OuyangXiaotong/leaderboard-demo--medai-arena&type=Date)](https://star-history.com/#OuyangXiaotong/leaderboard-demo--medai-arena&Date)
 ## 📄 License
-MIT © 2024–Present OuyangXiaotong
+MIT © 2025–Present Xiaotong Ouyang
 ---
 **MedAI Arena – Making every medical AI model fairly evaluated!**
 Give it a star if you like it ⭐
