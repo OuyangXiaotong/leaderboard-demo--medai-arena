@@ -1,0 +1,21 @@
+[
+  {
+    "id": "stroknet-emergency",
+    "name": "StrokeNet-Emergency",
+    "type": "Vision",
+    "elo": 1292,
+    "organization": "Mass General",
+    "task": "Acute Stroke Detection (CT)",
+    "specialty": "Stroke",
+    "license": "MIT",
+    "description": "Short one-line description",
+    "metrics": {
+      "sensitivity": 0.92,
+      "specificity": 0.85,
+      "dataset": "Phantom/UKLS/4ITLR"
+    },
+    "image": "assets/images/strokenet.png",
+    "source_url": "https://..."
+  },
+  { /* ...更多 model objects ... */ }
+]
