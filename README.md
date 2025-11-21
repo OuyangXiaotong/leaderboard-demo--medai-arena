@@ -1,7 +1,7 @@
 # MedAI Arena – Comprehensive Medical AI Leaderboard 🏥🤖
 **The most complete crowdsourced leaderboard for medical AI models worldwide**  
 From Med-PaLM 2 and GPT-4o Medical to specialized detection/segmentation models across all imaging modalities.
-**Live Demo**: https://ouyangxiaotong.github.io/leaderboard-demo--medai-arena
+**Live Demo**: https://ouyangxiaotong.github.io/leaderboard-demo-medai-arena
 ![MedAI Arena](screenshot.png)
 ## ✨ Features
 - 5+ state-of-the-art medical AI models (constantly updated)
