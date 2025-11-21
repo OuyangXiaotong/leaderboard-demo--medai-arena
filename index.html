@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAI Arena - Comprehensive Medical AI Leaderboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .medal-1 { color: #FFD700; } .medal-2 { color: #C0C0C0; } .medal-3 { color: #CD7F32; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .dropdown-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .dropdown-content.show { max-height: 500px; }
+        .category-badge-llm { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .category-badge-vision { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .category-badge-detection { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .category-badge-segmentation { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .category-badge-classification { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .category-badge-reconstruction { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .category-badge-registration { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+        .category-badge-synthesis { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="bg-blue-600 text-white p-1.5 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">MedAI Arena</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-blue-600 font-medium border-b-2 border-blue-600 h-16 flex items-center">Leaderboard</a>
+                    <a href="#" class="text-slate-500 hover:text-slate-700 font-medium h-16 flex items-center">About</a>
+                    <a href="#" class="text-slate-500 hover:text-slate-700 font-medium h-16 flex items-center">Submit Model</a>
+                    <a href="#" class="text-slate-500 hover:text-slate-700 font-medium h-16 flex items-center">Blog</a>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                        Vote in Arena
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Header Section -->
+        <div class="mb-8 text-center max-w-4xl mx-auto">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Comprehensive Medical AI Leaderboard</h1>
+            <p class="text-lg text-slate-600">
+                Crowdsourced evaluation platform for Medical AI models including LLMs, Computer Vision, and specialized diagnostic systems. 
+                We evaluate models across multiple domains: clinical reasoning, medical imaging, diagnostic accuracy, and research capabilities.
+            </p>
+            <div class="mt-4 flex justify-center gap-6 text-sm">
+                <span class="text-slate-500">Last updated: <span id="last-updated">October 2023</span></span>
+                <span class="text-slate-500">•</span>
+                <span class="text-slate-500">Total Models: <span class="font-semibold" id="model-count">87</span></span>
+                <span class="text-slate-500">•</span>
+                <span class="text-slate-500">Total Votes: <span class="font-semibold">524.3k</span></span>
+            </div>
+        </div>
+
+        <!-- Advanced Filters Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
+            <div class="flex flex-col lg:flex-row gap-4">
+                
+                <!-- Main Category Filter -->
+                <div class="flex-1">
+                    <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 block">Category</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="filterMainCategory('all')" class="main-cat-btn active px-3 py-1.5 rounded-md text-sm font-medium bg-blue-600 text-white">All Models</button>
+                        <button onclick="filterMainCategory('llm')" class="main-cat-btn px-3 py-1.5 rounded-md text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">LLMs</button>
+                        <button onclick="filterMainCategory('vision')" class="main-cat-btn px-3 py-1.5 rounded-md text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">Computer Vision</button>
+                        <button onclick="filterMainCategory('multimodal')" class="main-cat-btn px-3 py-1.5 rounded-md text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">Multimodal</button>
+                    </div>
+                </div>
+
+                <!-- Task Type Filter -->
+                <div class="flex-1">
+                    <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 block">Task Type</label>
+                    <div class="flex flex-wrap gap-2" id="task-filters">
+                        <button onclick="filterTask('all')" class="task-btn active px-3 py-1.5 rounded-md text-xs font-medium bg-slate-600 text-white">All Tasks</button>
+                        <button onclick="filterTask('detection')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Detection</button>
+                        <button onclick="filterTask('segmentation')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Segmentation</button>
+                        <button onclick="filterTask('classification')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Classification</button>
+                        <button onclick="filterTask('reconstruction')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">3D Recon</button>
+                        <button onclick="filterTask('registration')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Registration</button>
+                        <button onclick="filterTask('synthesis')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Synthesis</button>
+                        <button onclick="filterTask('qa')" class="task-btn px-3 py-1.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Q&A</button>
+                    </div>
+                </div>
+
+                <!-- Modality/Region Filter -->
+                <div class="flex-1">
+                    <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 block">Modality / Region</label>
+                    <select id="modality-select" onchange="filterModality()" class="w-full px-3 py-1.5 rounded-md border border-slate-300 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        <option value="all">All Modalities</option>
+                        <optgroup label="Imaging Modalities">
+                            <option value="xray">X-Ray</option>
+                            <option value="ct">CT Scan</option>
+                            <option value="mri">MRI</option>
+                            <option value="ultrasound">Ultrasound</option>
+                            <option value="mammography">Mammography</option>
+                            <option value="pet">PET Scan</option>
+                            <option value="fundus">Fundus/Retinal</option>
+                            <option value="dermoscopy">Dermoscopy</option>
+                            <option value="pathology">Pathology/Histology</option>
+                            <option value="endoscopy">Endoscopy</option>
+                        </optgroup>
+                        <optgroup label="Body Regions">
+                            <option value="chest">Chest/Thorax</option>
+                            <option value="brain">Brain/Neuro</option>
+                            <option value="abdomen">Abdomen</option>
+                            <option value="cardiac">Cardiac/Heart</option>
+                            <option value="musculoskeletal">Musculoskeletal</option>
+                            <option value="breast">Breast</option>
+                            <option value="skin">Skin/Dermatology</option>
+                            <option value="eye">Eye/Ophthalmology</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and View Controls -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+            <div class="relative w-full sm:w-64">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <input type="text" id="search-input" placeholder="Search model name..." class="pl-10 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm transition-colors">
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider w-16">Rank</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer group hover:bg-slate-100" onclick="sortTable('name')">
+                                Model
+                                <span class="inline-block ml-1 invisible group-hover:visible">↕</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer group hover:bg-slate-100" onclick="sortTable('elo')">
+                                <div class="flex items-center justify-center">
+                                    Arena Elo
+                                    <span class="inline-block ml-1 invisible group-hover:visible">↓</span>
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">95% CI</th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Votes</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden xl:table-cell">Task/Modality</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">Organization</th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">License</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body" class="bg-white divide-y divide-slate-200">
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <button id="show-more-btn" class="text-blue-600 hover:text-blue-800 font-medium text-sm">Show more models</button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-500 tracking-wider uppercase">About</h3>
+                    <p class="mt-4 text-base text-slate-500">
+                        MedAI Arena is an open-source project dedicated to benchmarking LLMs on medical tasks. We use a combination of automated benchmarks and expert human evaluation.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-500 tracking-wider uppercase">Legal</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-slate-500 hover:text-slate-900">Privacy Policy</a></li>
+                        <li><a href="#" class="text-base text-slate-500 hover:text-slate-900">Terms of Service</a></li>
+                        <li><a href="#" class="text-base text-slate-500 hover:text-slate-900">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-500 tracking-wider uppercase">Connect</h3>
+                    <div class="flex space-x-6 mt-4">
+                        <a href="https://github.com/你的用户名/medai-arena" class="text-slate-400 hover:text-slate-500">
+                            <span class="sr-only">GitHub</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.288.63-1.581-2.615-.298-5.364-1.306-5.364-5.814 0-1.286.46-2.339 1.213-3.194-.121-.3-.525-1.524.115-3.156 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.64 1.632.236 2.856.116 3.156.754.856 1.212 1.908 1.212 3.194 0 4.517-2.753 5.513-5.377 5.807.36.31.682.928.682 1.872 0 1.352-.012 2.443-.012 2.774 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-slate-200 pt-8 text-center">
+                <p class="text-base text-slate-400">&copy; 2024 MedAI Arena. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+    </script>
+</body>
+</html>
